@@ -35,8 +35,7 @@ const StudenthomeSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
     ref: "user",
-    required: [true, "A studenthome needs to have a owner."],
-    autopopulate: true,
+    required: [true, "A studenthome needs to have a owner."]
   },
 });
 const validatePostalCodeScript = /^(?:NL-)?(\d{4})\s*([A-Z]{2})$/i;

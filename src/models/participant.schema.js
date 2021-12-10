@@ -13,5 +13,5 @@ const ParticipantSchema = new Schema({
     required: [true, "A participant needs to have a creationDate."],
   }
 });
-
+ParticipantSchema.plugin(require('mongoose-autopopulate'));
 module.exports = ParticipantSchema

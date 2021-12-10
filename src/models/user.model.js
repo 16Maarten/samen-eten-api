@@ -57,7 +57,7 @@ UserSchema.pre('remove', async function() {
     // this makes sure the code executes inside mongo
     await Meal.updateMany({}, {$pull: {'organizer' : this._id}})
     await Meal.updateMany({}, { $pull: { 'reviews': { 'user': this._id } } })
-    await Meal.updateMany({}, { $pull: { 'participants': { 'user': this._id } } })
+    
 
 })
 

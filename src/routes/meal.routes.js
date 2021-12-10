@@ -8,9 +8,9 @@ const mealCrudController = new CrudController(Meal);
 const userController = require("../controllers/user.controller");
 
 router.post("",userController.validateToken, mealCrudController.create);
-router.get("", userController.validateToken,mealCrudController.getAll);
-router.get("/:id", userController.validateToken,mealCrudController.getOne);
-router.put("/:id", userController.validateToken,mealCrudController.update);
-router.delete("/:id", userController.validateToken,mealCrudController.delete);
+router.get("",userController.validateToken,mealCrudController.getAll);
+router.get("/:id",userController.validateToken,mealCrudController.getOne);
+router.put("/:id",userController.validateToken,mealCrudController.update);
+router.delete("/:id",userController.validateToken,mealCrudController.delete);
 
 module.exports = router;

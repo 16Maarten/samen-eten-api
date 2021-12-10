@@ -17,6 +17,16 @@ async function mongo(dbName) {
   }
 }
 
+async function atlas(conenctionString) {
+  try {
+     await mongoose.connect(conenctionString, options)
+     console.log(`connection to mongo DB established`)
+  } catch (err) {
+
+     console.error(err)
+  }
+}
+
 /*function neo(dbName) {
   try {
     neo_driver.connect(dbName);
@@ -28,5 +38,6 @@ async function mongo(dbName) {
 
 module.exports = {
   mongo,
+  atlas,
   //neo,
 };

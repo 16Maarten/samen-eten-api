@@ -9,8 +9,7 @@ const MealSchema = new Schema({
   studenthome: {
     type: Schema.Types.ObjectId,
     ref:'studenthome',
-    required: [true, "A meal needs to have a studenthome."],
-    autopopulate: true
+    required: [true, "A meal needs to have a studenthome."]
   },
   name: {
     type: String,
@@ -27,8 +26,7 @@ const MealSchema = new Schema({
   organizer: {
     type: Schema.Types.ObjectId,
     ref:'user',
-    required: [true, "A meal needs to have an organizer."],
-    autopopulate: true
+    required: [true, "A meal needs to have an organizer."]
   },
   price: {
     type: Number,
@@ -48,14 +46,14 @@ const MealSchema = new Schema({
     required: [true, "A meal needs to have ingredients."],
   },
   participants:{
-      type: [ParticipantSchema]
+      type: [ParticipantSchema],
+      autopopulate: true
   },
   reviews:{
-    type: [ReviewSchema],
-    autopopulate: true
+    type: [ReviewSchema]
 }
 
 });
-
+MealSchema.plugin(require('mongoose-autopopulate'));
 // export the user model through a caching function
 module.exports = getModel("meal", MealSchema);
