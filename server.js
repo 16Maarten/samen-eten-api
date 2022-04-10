@@ -21,5 +21,6 @@ if (process.env.NODE_ENV === "dev") {
   connect.neo(process.env.NEO4J_TEST_DB);
 } else if (process.env.NODE_ENV === "prod") {
   connect.atlas(process.env.ATLAS_CONNECTION);
+  connect.neo(process.env.NEO4J_PROD_DB);
 }
 
