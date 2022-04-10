@@ -2,11 +2,22 @@ const neo4j = require("neo4j-driver");
 
 function connect(dbName) {
   this.dbName = dbName;
-  this.driver = neo4j.driver(
-    process.env.NEO4J_URL,
-    neo4j.auth.basic(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD)
-  );
-  console.log("test");
+  if (process.env.NODE_ENV === "dev") {
+    this.driver = neo4j.driver(
+      process.env.NEO4J_URL,
+      neo4j.auth.basic(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD)
+    );
+  } else if (process.env.NODE_ENV === "test") {
+    this.driver = neo4j.driver(
+      process.env.NEO4J_URL,
+      neo4j.auth.basic(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD)
+    );
+  } else if (process.env.NODE_ENV === "prod") {
+    this.driver = neo4j.driver(
+      process.env.NEO4J_CONNECTION,
+      neo4j.auth.basic(process.env.NEO4J_CONNECTION_USER, process.env.NEO4J_CONNECTION_PASSWORD)
+    );
+  }
 }
 
 function session() {
