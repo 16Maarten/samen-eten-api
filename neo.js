@@ -15,7 +15,7 @@ function connect(dbName) {
   } else if (process.env.NODE_ENV === "prod") {
     this.driver = neo4j.driver(
       process.env.NEO4J_CONNECTION,
-      neo4j.auth.basic(process.env.NEO4J_CONNECTION_USER, process.env.NEO4J_CONNECTION_PASSWORD)
+      neo4j.auth.basic(process.env.NEO4J_CONNECTION_USER, process.env.NEO4J_CONNECTION_PASSWORD),{ encrypted: 'ENCRYPTION_ON' }
     );
   }
 }
