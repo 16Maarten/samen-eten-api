@@ -61,6 +61,30 @@ describe("User CRUD", () => {
         res.body.should.be.an("object").that.has.keys("message");
         res.body.message.should.be.a("string").that.equals("user validation failed: studentNumber: A studentNumber has to be higher then 100000");
       });
+
+      it("Should login user", async function () {
+        await requester.post(`/api/users/register`).send(testUser1)
+        const res = await requester.post(`/api/users/login`).send({  email: testUser1.email,password: testUser1.password})
+        res.should.have.status(200);
+        res.body.should.be.an("object").that.has.keys("_id","token","message","email");
+        res.body.message.should.be.a("string").that.equals("Login Success");
+      });
+
+      it("Shouldn't login user because of password", async function () {
+        await requester.post(`/api/users/register`).send(testUser1)
+        const res = await requester.post(`/api/users/login`).send({  email: testUser1.email,password: "123"})
+        res.should.have.status(401);
+        res.body.should.be.an("object").that.has.keys("message");
+        res.body.message.should.be.a("string").that.equals("Password is incorrect");
+      });
+
+      it("Shouldn't login user because of email", async function () {
+        await requester.post(`/api/users/register`).send(testUser1)
+        const res = await requester.post(`/api/users/login`).send({  email: "email@mail.nl",password: testUser1.password})
+        res.should.have.status(401);
+        res.body.should.be.an("object").that.has.keys("message");
+        res.body.message.should.be.a("string").that.equals("Email does not exist");
+      });
     
       it("Should give a single user", async function () {
         const id = await requester.post(`/api/users/register`).send(testUser1)
