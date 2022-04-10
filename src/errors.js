@@ -19,7 +19,6 @@ function cast(err, req, res, next) {
   if (err.name === "CastError") {
     res.status(400).json({
       message: `Invalid resource id: ${err.value}`,
-      // message: err
     });
   } else {
     next(err);

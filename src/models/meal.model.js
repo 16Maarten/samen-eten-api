@@ -55,5 +55,5 @@ const MealSchema = new Schema({
 
 });
 MealSchema.plugin(require('mongoose-autopopulate'));
-// export the user model through a caching function
+
 module.exports = getModel("meal", MealSchema);

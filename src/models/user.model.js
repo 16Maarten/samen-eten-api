@@ -4,7 +4,6 @@ const getModel = require("./model_cache");
 const uniqueValidator = require('mongoose-unique-validator');
 
 const UserSchema = new Schema({
-  // a user needs to have a name
   firstName: {
     type: String,
     required: [true, "An user needs to have a firstName."],

@@ -1,5 +1,5 @@
-const User = require("../models/user.model")(); // note we need to call the model caching function
-const Meal = require("../models/meal.model")(); // note we need to call the model caching function
+const User = require("../models/user.model")(); 
+const Meal = require("../models/meal.model")(); 
 const errors = require("../errors");
 
 async function create(req, res) {

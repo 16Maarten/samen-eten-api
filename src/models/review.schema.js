@@ -9,8 +9,6 @@ const ReviewSchema = new Schema({
         required: [true, 'A creationDate is required.'],
     },
 
-    // a rating can only be a number from 1 to 5, use a
-    // validator to make sure
     rating: {
         type: Number,
         required: [true, 'A rating is required.'],
@@ -22,7 +20,6 @@ const ReviewSchema = new Schema({
         }
     },
 
-    // every review needs a user associated with it
     user: {
         type: Schema.Types.ObjectId,
         ref: 'user',
@@ -31,5 +28,4 @@ const ReviewSchema = new Schema({
     }
 });
 
-// export the review schema
 module.exports = ReviewSchema;

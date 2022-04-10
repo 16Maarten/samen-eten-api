@@ -26,7 +26,6 @@ class CrudController {
   };
 
   delete = async (req, res, next) => {
-    // this happens in two steps to make mongoose middleware run
     const entity = await this.model.findById(req.params.id);
     await entity.delete()
     res.status(200).send({message: "entity with id: " + req.params.id + " deleted"}).end();

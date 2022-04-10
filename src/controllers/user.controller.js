@@ -19,7 +19,6 @@ class UserController {
         })
         .end();
     } else {
-      // Strip the word 'Bearer ' from the headervalue
       const token = authHeader.substring(7, authHeader.length);
       jwt.verify(token, jwtSecretKey, (err, payload) => {
         if (err) {
@@ -215,7 +214,6 @@ class UserController {
   }
 
   delete = async (req, res, next) => {
-    // this happens in two steps to make mongoose middleware run
     const entity = await User.findById(req.params.id);
     await entity.delete()
     const session = neo.session();
