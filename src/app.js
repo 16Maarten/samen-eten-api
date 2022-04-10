@@ -22,7 +22,6 @@ app.use(cors())
 // helmet sets headers to avoid common security risks
 // https://expressjs.com/en/advanced/best-practice-security.html
 app.use(helmet())
-const port = process.env.PORT || 3000;
 
 // Authenticatie | UC-101 t/m UC-103
 app.use("/api/users", user);

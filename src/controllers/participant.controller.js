@@ -16,18 +16,8 @@ async function create(req, res) {
   };
   const meal = await Meal.findById(req.params.id);
 
-  // maybe not necessary any more now that we store it in neo?
-  // BEWARE: atomicity issues!
   meal.participants.push(participant);
   await meal.save();
-
-  /*const session = neo.session()
-
-    await session.run(neo.review, {
-        userId: user._id.toString(),
-        productId: product._id.toString(),
-        rating: review.rating,
-    })*/
 
   res.status(201).end();
 }

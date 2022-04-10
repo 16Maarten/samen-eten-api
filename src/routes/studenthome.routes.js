@@ -10,9 +10,9 @@ const userController = require('../controllers/user.controller')
 // UC-201 Maak studentenhuis
 router.post("",userController.validateToken, studenthomeCrudController.create);
 // UC-202 Overzicht van studentenhuizen
-router.get("",userController.validateToken, studenthomeCrudController.getAll);
+router.get("", studenthomeCrudController.getAll);
 // UC-203 Details van studentenhuis
-router.get("/:id",userController.validateToken, studenthomeCrudController.getOne);
+router.get("/:id", studenthomeCrudController.getOne);
 // UC-204 Studentenhuis wijzigen
 router.put("/:id",userController.validateToken, studenthomeCrudController.update);
 // UC-205 Studentenhuis verwijderen

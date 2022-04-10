@@ -1,21 +1,25 @@
 const express = require('express')
 const router = express.Router()
-const User = require("../models/user.model")(); // note we need to call the model caching function
+const User = require("../models/user.model")();
 const CrudController = require("../controllers/crud");
 const userCrudController = new CrudController(User);
 const userController = require("../controllers/user.controller");
 
-// UC-201 Maak studentenhuis
+
 router.post("/register", userController.create);
-// UC-201 Maak studentenhuis
+
 router.post("/login", userController.login);
-// UC-202 Overzicht van studentenhuizen
-router.get("",userController.validateToken, userCrudController.getAll);
-// UC-203 Details van studentenhuis
+
+router.post("/:id/follow",userController.validateToken, userController.follow);
+
 router.get("/:id",userController.validateToken, userCrudController.getOne);
-// UC-204 Studentenhuis wijzigen
+
+router.get("/:id/followers",userController.validateToken, userController.followers);
+
 router.put("/:id",userController.validateToken, userCrudController.update);
-// UC-205 Studentenhuis verwijderen
-router.delete("/:id",userController.validateToken, userCrudController.delete);
+
+router.delete("/:id",userController.validateToken, userController.delete);
+
+router.delete("/:id/unfollow",userController.validateToken, userController.unfollow);
 
 module.exports = router;

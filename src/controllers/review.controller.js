@@ -11,61 +11,61 @@ async function create(req, res) {
       `User with name '${req.body.user}' not found`
     );
   }
-
   const review = {
     rating: req.body.rating,
     text: req.body.text,
     creationDate: req.body.creationDate,
     user: user._id,
   };
-
-  const meal = await Meal.findById(req.params.id);
-
-  // maybe not necessary any more now that we store it in neo?
-  // BEWARE: atomicity issues!
+  let meal = await Meal.findById(req.params.id);
   meal.reviews.push(review);
   await meal.save();
-
-  /*const session = neo.session()
-
-    await session.run(neo.review, {
-        userId: user._id.toString(),
-        productId: product._id.toString(),
-        rating: review.rating,
-    })*/
-
-  res.status(201).end();
+  res.status(201).send({message: "Review added!", id: meal.reviews[(meal.reviews.length)-1]._id}).end();
 }
 
 async function update(req, res) {
+  let send = false
   const meal = await Meal.findById(req.params.id);
   for (let i = 0; i < meal.reviews.length; i++) {
     if (meal.reviews[i]._id == req.params.idReview) {
       meal.reviews[i].rating = req.body.rating;
       meal.reviews[i].text = req.body.text;
+      await Meal.findByIdAndUpdate(req.params.id, meal);
+      send = true
+      res.status(201).send( meal.reviews[i]).end();
     }
   }
-  await Meal.findByIdAndUpdate(req.params.id, meal);
-  res.status(201).end();
+  if(!send){
+    res.status(400).send({ message: "Invalid resource id: "+ req.params.idReview }).end();
+    }
 }
 
 async function remove(req, res) {
+  let send = false
     const meal = await Meal.findById(req.params.id);
     for (let i = 0; i < meal.reviews.length; i++) {
       if (meal.reviews[i]._id == req.params.idReview) {
-        meal.reviews.splice(i, 1)
+        await Meal.findByIdAndUpdate(req.params.id, meal);
+        send = true
+        res.status(201).send({message: "entity with id: " + req.params.idReview + " deleted"}).end();
       }
     }
-    await Meal.findByIdAndUpdate(req.params.id, meal);
-    res.status(201).end();
+    if(!send){
+      res.status(400).send({ message: "Invalid resource id: "+ req.params.idReview }).end();
+      }
 }
 
 async function get(req, res) {
+    let send = false
     const meal = await Meal.findById(req.params.id);
     for (let i = 0; i < meal.reviews.length; i++) {
       if (meal.reviews[i]._id == req.params.idReview) {
+        send = true
         res.status(201).send(meal.reviews[i])
       }
+    }
+    if(!send){
+    res.status(400).send({ message: "Invalid resource id: "+ req.params.idReview }).end();
     }
 }
 
